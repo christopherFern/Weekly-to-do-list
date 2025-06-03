@@ -9,6 +9,10 @@ function App() {
     setTasks([...tasks, input.trim()]);
     setInput("");
   };
+  const handleDelete = (indexToRemove) => {
+    const updatedTasks = tasks.filter((_, index) => index !== indexToRemove);
+    setTasks(updatedTasks);
+  };
 
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
@@ -25,8 +29,14 @@ function App() {
       
       <ul style={{ marginTop: "1rem" }}>
         {tasks.map((task, index) => (
-          <li key={index} style={{ marginBottom: "0.5rem"}}>
-            {task}
+          <li key={index} style={{ marginBottom: "0.5rem", display: "flex", alignItems: "center"}}>
+            <span style={{ flexGrow: 1 }}>{task}</span>
+            <button
+              onClick={() => handleDelete(index)}
+              style={{ marginLeft: "0.5rem", background: "red", color: "white", border: "none", padding: "0.3rem 0.6rem"}}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
