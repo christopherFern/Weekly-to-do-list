@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [input, setInput] = useState("");
 
   const addTask = () => {
@@ -13,6 +16,9 @@ function App() {
     const updatedTasks = tasks.filter((_, index) => index !== indexToRemove);
     setTasks(updatedTasks);
   };
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
